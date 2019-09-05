@@ -1,0 +1,26 @@
+<app-card-list
+    title="To Do"
+    listId="todoList"
+    [cards]="todo"
+    [connectedTo]="['doingList', 'doneList']"
+    (evtDrop)="drop($event)"
+    >
+</app-card-list>
+
+<app-card-list
+    title="Doing"
+    listId="doingList"
+    [cards]="doing"
+    [connectedTo]="['todoList', 'doneList']"
+    (evtDrop)="drop($event)"
+    >
+</app-card-list>
+
+<app-card-list
+    title="Done"
+    listId="doneList"
+    [cards]="done"
+    [connectedTo]="['todoList', 'doingList']"
+    (evtDrop)="drop($event)"
+    >
+</app-card-list>

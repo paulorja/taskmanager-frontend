@@ -1,0 +1,26 @@
+<div class="cardlist-container">
+    <h2>{{ title }}</h2>
+
+    <div
+        cdkDropList
+        id="{{listId}}"
+        [cdkDropListData]="cards"
+        [cdkDropListConnectedTo]="connectedTo"
+        class="cardlist"
+        (cdkDropListDropped)="drop($event)">
+
+        <app-card 
+            class="card" 
+            *ngFor="let card of cards" 
+            [title]="card"
+            cdkDrag>
+        </app-card>
+
+        <div *ngIf="cards.length === 0">Nenhum card</div>
+
+    </div>
+
+    <br>
+    <button (click)="addCard()">New card</button>
+</div>
+
