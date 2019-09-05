@@ -1,4 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+
+import { CardDialogComponent } from '../card-dialog/card-dialog.component';
+import { Card } from '../card';
 
 @Component({
   selector: 'app-card-list',
@@ -9,12 +13,13 @@ export class CardListComponent implements OnInit {
 
   @Input() title
   @Input() listId 
+  @Input() statusId
   @Input() cards
   @Input() connectedTo
 
   @Output() evtDrop = new EventEmitter()
 
-  constructor() { }
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit() {
   }
@@ -23,9 +28,18 @@ export class CardListComponent implements OnInit {
     this.evtDrop.emit(event)
   }
 
-  addCard() {
-    console.log("oi")
-    this.cards.push("foo")
+  openCardDialog() {
+    let card = new Card()
+    card.status = this.statusId
+
+    this.dialog.open(CardDialogComponent, {
+      width: '400px',
+      data: { 
+        editMode: true,
+        newMode: true,
+        card: card
+      }
+    });
   }
 
 }

@@ -12,7 +12,7 @@
         <app-card 
             class="card" 
             *ngFor="let card of cards" 
-            [title]="card"
+            [card]="card"
             cdkDrag>
         </app-card>
 
@@ -21,6 +21,6 @@
     </div>
 
     <br>
-    <button (click)="addCard()">New card</button>
+    <button (click)="openCardDialog()">New card</button>
 </div>
 

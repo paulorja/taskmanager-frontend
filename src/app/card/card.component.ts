@@ -2,10 +2,7 @@ import { Component, OnInit, Input, Inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog'
 import { CardDialogComponent } from '../card-dialog/card-dialog.component';
 
-export interface DialogData {
-  animal: string;
-  name: string;
-}
+import { Card } from '../card';
 
 @Component({
   selector: 'app-card',
@@ -15,7 +12,7 @@ export interface DialogData {
 export class CardComponent implements OnInit {
 
   @Input()
-  title
+  card: Card 
 
   constructor(public dialog: MatDialog) { }
 
@@ -25,7 +22,11 @@ export class CardComponent implements OnInit {
   openDialog() {
     this.dialog.open(CardDialogComponent, {
       width: '400px',
-      data: {title: this.title}
+      data: {
+          editMode: false,
+          newMode: false,
+          card: this.card
+        }
     });
   }
 

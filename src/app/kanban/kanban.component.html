@@ -1,6 +1,7 @@
 <app-card-list
     title="To Do"
     listId="todoList"
+    statusId="1"
     [cards]="todo"
     [connectedTo]="['doingList', 'doneList']"
     (evtDrop)="drop($event)"
@@ -10,6 +11,7 @@
 <app-card-list
     title="Doing"
     listId="doingList"
+    statusId="2"
     [cards]="doing"
     [connectedTo]="['todoList', 'doneList']"
     (evtDrop)="drop($event)"
@@ -19,6 +21,7 @@
 <app-card-list
     title="Done"
     listId="doneList"
+    statusId="3"
     [cards]="done"
     [connectedTo]="['todoList', 'doingList']"
     (evtDrop)="drop($event)"

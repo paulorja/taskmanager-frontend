@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
+import { Card } from '../card';
+
 @Component({
   selector: 'app-kanban',
   templateUrl: './kanban.component.html',
@@ -9,8 +11,8 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 export class KanbanComponent implements OnInit {
 
   todo = [
-    'Task 1',
-    'Task 2'
+    new Card("1", "Task 1", "foo bar 1"),
+    new Card("1", "Task 2", "foo bar 2")
   ];
 
   doing = [
@@ -18,7 +20,7 @@ export class KanbanComponent implements OnInit {
   ]
 
   done = [
-    'Task 3'
+    new Card("3", "Task 3", "foo bar 3"),
   ];
 
   constructor() { }

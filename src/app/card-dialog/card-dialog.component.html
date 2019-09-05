@@ -1,1 +1,48 @@
-<h2>{{title}}</h2>
+<div *ngIf="!editMode">
+    <button (click)="editMode = true">Editar</button>
+
+    <h2>{{card.title}}</h2>
+
+</div>
+
+<form action="#" *ngIf="editMode">
+    <button *ngIf="!newMode" (click)="editMode = false">Visualizar</button>
+
+    <mat-form-field>
+        <mat-label>Status</mat-label>
+        <mat-select [(value)]="card.status">
+            <mat-option value="1">To Do</mat-option>
+            <mat-option value="2">Doing</mat-option>
+            <mat-option value="3">Done</mat-option>
+        </mat-select>
+    </mat-form-field>
+    
+    <mat-form-field>
+        <input matInput placeholder="Título" value="{{card.title}}">
+    </mat-form-field>
+
+    <mat-form-field>
+        <textarea matInput placeholder="Descrição" value="{{card.description}}"></textarea>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput placeholder="Responsável" value="">
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput placeholder="Data" value="">
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Prioridade</mat-label>
+        <mat-select>
+            <mat-option value="1">Baixa</mat-option>
+            <mat-option value="2">Média</mat-option>
+            <mat-option value="3">Alta</mat-option>
+            <mat-option value="4">Urgente</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <button>Salvar</button>
+
+</form>

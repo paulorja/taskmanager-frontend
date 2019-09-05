@@ -1,6 +1,8 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { DialogData } from '../card/card.component';
+
+import { Card } from '../card';
+
 
 @Component({
   selector: 'app-card-dialog',
@@ -9,13 +11,21 @@ import { DialogData } from '../card/card.component';
 })
 export class CardDialogComponent {
 
-  title
+  card: Card;
+  editMode: boolean = false;
+  newMode: boolean = false;
+  
+
+  selectedStatus = "2"
 
   constructor(
     public dialogRef: MatDialogRef<CardDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData
+    @Inject(MAT_DIALOG_DATA) public data
   ) { 
-    this.title = data["title"]
+    this.editMode = data["editMode"]
+    this.newMode = data["newMode"]
+    this.card = data["card"]
+    console.log(this.card)
   }
 
   onNoClick(): void {
