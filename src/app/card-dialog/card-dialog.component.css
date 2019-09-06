@@ -3,7 +3,7 @@
     flex-direction: column;
 }
 
-#card-form > * {
+#card-form > div {
     width: 100%;
 }
 
@@ -15,15 +15,24 @@
     margin-left: 5%;
 }
 
-
-
-
-.example-option-img {
+.member-option-img {
     vertical-align: middle;
     margin-right: 8px;
 }
 
-[dir='rtl'] .example-option-img {
+[dir='rtl'] .member-option-img {
     margin-right: 0;
     margin-left: 8px;
+}
+
+.spacer {
+    width: 12px;
+}
+
+.detail-buttons > button {
+    width: 48%;
+}
+
+.detail-buttons > button:first-child {
+    margin-right: 4%;
 }

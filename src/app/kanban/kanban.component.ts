@@ -11,8 +11,10 @@ import { Card } from '../card';
 export class KanbanComponent implements OnInit {
 
   todo = [
-    new Card("1", "Task 1", "foo bar 1"),
-    new Card("1", "Task 2", "foo bar 2")
+    new Card("1", "Task 1", "foo bar 1","","https://static.vecteezy.com/system/resources/previews/000/420/553/non_2x/avatar-icon-vector-illustration.jpg"),
+    new Card("1", "Task 2", "foo bar 2"),
+    new Card("1", "Fazer bolo de cenoura", "foo bar 2"),
+    new Card("1", "Passar nos correios e depois levar até o shopping", "foo bar 2")
   ];
 
   doing = [

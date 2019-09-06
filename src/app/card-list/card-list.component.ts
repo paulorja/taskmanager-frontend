@@ -36,6 +36,7 @@ export class CardListComponent implements OnInit {
 
     this.dialog.open(CardDialogComponent, {
       width: '400px',
+      panelClass: 'card-dialog',
       data: { 
         editMode: true,
         newMode: true,

@@ -1,13 +1,45 @@
-<div *ngIf="!editMode">
-    <button (click)="editMode = true">Editar</button>
+<mat-toolbar *ngIf="!editMode" color="primary">
+    <mat-toolbar-row>
+        <mat-icon>description</mat-icon>
+        <span class="spacer"></span>
+        <span>Visualizar Tarefa</span>
+    </mat-toolbar-row>
+</mat-toolbar>
 
+<div class="card-detail" *ngIf="!editMode">
     <h2>{{card.title}}</h2>
+    <p>{{card.description}}</p>
 
+    <div class="detail-buttons">
+        <button mat-raised-button
+            color="warn">
+            Excluir
+        </button>
+        <button mat-raised-button
+            color="primary"
+            (click)="editMode = true">
+            Editar
+        </button>
+    </div>
 </div>
 
+
+<mat-toolbar *ngIf="editMode" color="primary">
+    <mat-toolbar-row>
+        <button mat-mini-fab
+            *ngIf="!newMode"
+            color="basic"
+            (click)="editMode = false">
+            <mat-icon>navigate_before</mat-icon>
+        </button>
+        <mat-icon *ngIf="newMode">library_add</mat-icon>
+        <span class="spacer"></span>
+        <span *ngIf="!newMode">Editar Tarefa</span>
+        <span *ngIf="newMode">Nova Tarefa</span>
+    </mat-toolbar-row>
+</mat-toolbar>
+
 <form [formGroup]="cardForm" *ngIf="editMode" id="card-form">
-    <h1 *ngIf="newMode">Nova Tarefa</h1>
-    <button *ngIf="!newMode" (click)="editMode = false">Visualizar</button>
 
     <mat-form-field>
         <input matInput required
@@ -17,11 +49,7 @@
         <mat-error>Título é obrigatório</mat-error>
     </mat-form-field>
 
-    <!-- <mat-form-field>
-        <input matInput placeholder="Responsável" value="">
-    </mat-form-field> -->
-
-    <mat-form-field class="example-full-width">
+    <mat-form-field>
         <input matInput required
             placeholder="Responsável" 
             aria-label="Responsável" 
@@ -29,7 +57,7 @@
             [formControl]="memberCtrl">
         <mat-autocomplete #auto="matAutocomplete">
             <mat-option *ngFor="let member of filteredMembers | async" [value]="member.name">
-            <img class="example-option-img" aria-hidden [src]="member.imgUrl" height="25">
+            <img class="member-option-img" aria-hidden [src]="member.imgUrl" height="25">
             <span>{{member.name}}</span> 
             </mat-option>
         </mat-autocomplete>

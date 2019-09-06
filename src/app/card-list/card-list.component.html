@@ -16,11 +16,14 @@
             cdkDrag>
         </app-card>
 
-        <div *ngIf="cards.length === 0">Nenhum card</div>
-
     </div>
 
-    <br>
-    <button (click)="openCardDialog()">New card</button>
+    <div class="cardlist-bottom">
+        <button mat-button 
+            color="primary" 
+            (click)="openCardDialog()">
+            Adicionar tarefa
+        </button>
+    </div>
 </div>
 

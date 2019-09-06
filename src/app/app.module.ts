@@ -9,6 +9,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material'
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,6 +19,7 @@ import { KanbanComponent } from './kanban/kanban.component';
 import { CardComponent } from './card/card.component';
 import { CardDialogComponent } from './card-dialog/card-dialog.component';
 import { CardListComponent } from './card-list/card-list.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +27,8 @@ import { CardListComponent } from './card-list/card-list.component';
     KanbanComponent,
     CardComponent,
     CardDialogComponent,
-    CardListComponent
+    CardListComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
@@ -39,7 +43,9 @@ import { CardListComponent } from './card-list/card-list.component';
     MatButtonModule,
     MatAutocompleteModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatToolbarModule,
+    MatIconModule
   ],
   providers: [MatDatepickerModule],
   entryComponents: [CardDialogComponent],

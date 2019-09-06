@@ -17,11 +17,13 @@ export class CardComponent implements OnInit {
   constructor(public dialog: MatDialog) { }
 
   ngOnInit() {
+    console.log(this.card)
   }
 
   openDialog() {
     this.dialog.open(CardDialogComponent, {
       width: '400px',
+      panelClass: 'card-dialog',
       data: {
           editMode: false,
           newMode: false,
