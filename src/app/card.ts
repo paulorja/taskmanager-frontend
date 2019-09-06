@@ -3,8 +3,8 @@ export class Card {
         public status?: string,
         public title?: string,
         public description?: string,
-        public owner?: string,
+        public member?: string,
         public date?: string,
-        public priority?: number
+        public priority?: string
     ) { }
 }

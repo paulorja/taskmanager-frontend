@@ -1,0 +1,29 @@
+#card-form {
+    display: flex;
+    flex-direction: column;
+}
+
+#card-form > * {
+    width: 100%;
+}
+
+#cardFormInputs > * {
+    width: 30%;
+}
+
+#cardFormInputs > *:nth-child(2), #cardFormInputs > *:nth-child(3) {
+    margin-left: 5%;
+}
+
+
+
+
+.example-option-img {
+    vertical-align: middle;
+    margin-right: 8px;
+}
+
+[dir='rtl'] .example-option-img {
+    margin-right: 0;
+    margin-left: 8px;
+}

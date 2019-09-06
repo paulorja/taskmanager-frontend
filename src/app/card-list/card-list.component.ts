@@ -31,6 +31,8 @@ export class CardListComponent implements OnInit {
   openCardDialog() {
     let card = new Card()
     card.status = this.statusId
+    card.priority = "1"
+    // card.member = "Paulo"
 
     this.dialog.open(CardDialogComponent, {
       width: '400px',

@@ -5,44 +5,72 @@
 
 </div>
 
-<form action="#" *ngIf="editMode">
+<form [formGroup]="cardForm" *ngIf="editMode" id="card-form">
+    <h1 *ngIf="newMode">Nova Tarefa</h1>
     <button *ngIf="!newMode" (click)="editMode = false">Visualizar</button>
 
     <mat-form-field>
-        <mat-label>Status</mat-label>
-        <mat-select [(value)]="card.status">
-            <mat-option value="1">To Do</mat-option>
-            <mat-option value="2">Doing</mat-option>
-            <mat-option value="3">Done</mat-option>
-        </mat-select>
-    </mat-form-field>
-    
-    <mat-form-field>
-        <input matInput placeholder="Título" value="{{card.title}}">
+        <input matInput required
+            placeholder="Título" 
+            name="title" 
+            formControlName="title">
+        <mat-error>Título é obrigatório</mat-error>
     </mat-form-field>
 
-    <mat-form-field>
-        <textarea matInput placeholder="Descrição" value="{{card.description}}"></textarea>
-    </mat-form-field>
-
-    <mat-form-field>
+    <!-- <mat-form-field>
         <input matInput placeholder="Responsável" value="">
+    </mat-form-field> -->
+
+    <mat-form-field class="example-full-width">
+        <input matInput required
+            placeholder="Responsável" 
+            aria-label="Responsável" 
+            [matAutocomplete]="auto" 
+            [formControl]="memberCtrl">
+        <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let member of filteredMembers | async" [value]="member.name">
+            <img class="example-option-img" aria-hidden [src]="member.imgUrl" height="25">
+            <span>{{member.name}}</span> 
+            </mat-option>
+        </mat-autocomplete>
     </mat-form-field>
+
+    <div id="cardFormInputs">
+        <mat-form-field>
+            <mat-label>Status</mat-label>
+            <mat-select name="status" formControlName="status">
+                <mat-option value="1">To Do</mat-option>
+                <mat-option value="2">Doing</mat-option>
+                <mat-option value="3">Done</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput [matDatepicker]="picker" placeholder="Data">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Prioridade</mat-label>
+            <mat-select name="priority" formControlName="priority">
+                <mat-option value="1">Baixa</mat-option>
+                <mat-option value="2">Média</mat-option>
+                <mat-option value="3">Alta</mat-option>
+                <mat-option value="4">Urgente</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
 
     <mat-form-field>
-        <input matInput placeholder="Data" value="">
+        <textarea matInput placeholder="Descrição"></textarea>
     </mat-form-field>
 
-    <mat-form-field>
-        <mat-label>Prioridade</mat-label>
-        <mat-select>
-            <mat-option value="1">Baixa</mat-option>
-            <mat-option value="2">Média</mat-option>
-            <mat-option value="3">Alta</mat-option>
-            <mat-option value="4">Urgente</mat-option>
-        </mat-select>
-    </mat-form-field>
-
-    <button>Salvar</button>
+    <button mat-raised-button
+        color="primary"
+        (click)="onSubmit()"
+        type="submit">
+        Salvar
+    </button>
 
 </form>
