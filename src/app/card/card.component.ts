@@ -17,7 +17,7 @@ export class CardComponent implements OnInit {
   constructor(public dialog: MatDialog) { }
 
   ngOnInit() {
-    console.log(this.card)
+    // console.log(this.card)
   }
 
   openDialog() {

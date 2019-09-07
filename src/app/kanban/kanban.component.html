@@ -1,34 +1,46 @@
 
-<div id="kanban">
+<div *ngIf="statusList" id="kanban">
 
     <app-card-list
+        *ngFor="let status of statusList"
+        [title]="status.name"
+        [listId]="status.name"
+        statusId="status.id"
+        [cards]="status.cards"
+        [connectedTo]="getListConnections(status)"
+        (evtDrop)="drop($event)"
+        >
+    </app-card-list>
+
+
+    <!-- <app-card-list
         title="To Do"
-        listId="todoList"
+        listId="To Do"
         statusId="1"
         [cards]="todo"
-        [connectedTo]="['doingList', 'doneList']"
+        [connectedTo]="['Doing', 'Done']"
         (evtDrop)="drop($event)"
         >
     </app-card-list>
 
     <app-card-list
         title="Doing"
-        listId="doingList"
+        listId="Doing"
         statusId="2"
         [cards]="doing"
-        [connectedTo]="['todoList', 'doneList']"
+        [connectedTo]="['To Do', 'Done']"
         (evtDrop)="drop($event)"
         >
     </app-card-list>
 
     <app-card-list
         title="Done"
-        listId="doneList"
+        listId="Done"
         statusId="3"
         [cards]="done"
-        [connectedTo]="['todoList', 'doingList']"
+        [connectedTo]="['To Do', 'Doing']"
         (evtDrop)="drop($event)"
         >
-    </app-card-list>
+    </app-card-list> -->
 
 </div>
