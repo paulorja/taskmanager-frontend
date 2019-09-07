@@ -28,6 +28,11 @@ export class CardListComponent implements OnInit {
     this.evtDrop.emit(event)
   }
 
+  deleteFeedback(deletedCard: Card) {
+    let index = this.cards.indexOf(deletedCard);
+    index > -1 ? this.cards.splice(index, 1) : false;
+  }
+
   openCardDialog() {
     let card = new Card()
     card.status_id = String(this.statusId)
@@ -46,7 +51,7 @@ export class CardListComponent implements OnInit {
     dialogRef.afterClosed()
     .subscribe(() => {
       let c = dialogRef.componentInstance.createdCard
-      let newCard = new Card(c["status_id"], c["title"], c["description"])
+      let newCard = new Card(c["id"], c["status_id"], c["title"], c["description"])
       this.cards.push(newCard)
     })
   }

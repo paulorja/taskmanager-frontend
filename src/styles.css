@@ -7,10 +7,10 @@ body {
     background-color: #fafafa;
 }
 
-.card-dialog .mat-dialog-container {
+.card-dialog .mat-dialog-container, .confirm-dialog, .mat-dialog-container {
     padding: 0px !important;
 }
 
-.card-dialog form, .card-dialog .card-detail {
+.card-dialog form, .card-dialog .card-detail, .confirm-dialog .confirm-detail {
     padding: 24px;
 }

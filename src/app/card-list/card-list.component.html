@@ -11,6 +11,7 @@
 
         <app-card 
             class="card" 
+            (delete)="deleteFeedback($event)"
             *ngFor="let card of cards" 
             [card]="card"
             cdkDrag>

@@ -1,14 +1,15 @@
 import { Component, Inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormGroup, FormBuilder, FormGroupName } from '@angular/forms'
-import { FormControl } from '@angular/forms'
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 
-import { RelationshipDataService } from '../relationship-data.service'
-import { TasksService } from '../tasks.service'
+import { RelationshipDataService } from '../relationship-data.service';
+import { TasksService } from '../tasks.service';
 import { Card } from '../card';
 import { Member } from '../member';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-card-dialog',
@@ -18,6 +19,7 @@ import { Member } from '../member';
 export class CardDialogComponent {
 
   card: Card;
+  deletedCard: Card;
   cardForm: FormGroup;
   editMode: boolean = false;
   newMode: boolean = false;
@@ -32,6 +34,7 @@ export class CardDialogComponent {
 
 
   constructor(
+    public dialog: MatDialog,
     public relationshipService: RelationshipDataService,
     public tasksService: TasksService,
     public dialogRef: MatDialogRef<CardDialogComponent>,
@@ -62,6 +65,24 @@ export class CardDialogComponent {
       priority_id: this.card.priority_id
     })
     this.memberCtrl.setValue(this.card.member)
+  }
+
+  openConfirmDialog() {
+    let dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '300px',
+      panelClass: 'confirm-dialog',
+      autoFocus: false,
+      data: {
+        card: this.card
+      }
+    })
+    dialogRef.afterClosed()
+    .subscribe(() => {
+      this.deletedCard = dialogRef.componentInstance.deletedCard;
+      if(this.deletedCard) {
+        this.dialogRef.close()
+      }
+    });
   }
 
   onSubmit() {

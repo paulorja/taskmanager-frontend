@@ -13,7 +13,7 @@ const httpOptions = {
 })
 export class TasksService {
 
-  private tasksUrl = 'http://localhost:3000/tasks'
+  private tasksUrl = 'http://localhost:3000/tasks/'
 
   constructor(private http: HttpClient) { }
 
@@ -27,6 +27,13 @@ export class TasksService {
         this.tasksUrl, JSON.stringify({
           task: taskData
         }), httpOptions)
+      .toPromise();
+  }
+
+  delete(taskId) {
+    return this.http
+      .delete(
+        this.tasksUrl + taskId)
       .toPromise();
   }
 

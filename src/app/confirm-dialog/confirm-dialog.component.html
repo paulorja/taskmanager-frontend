@@ -1,0 +1,29 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+        <mat-icon>info</mat-icon>
+        <span class="spacer"></span>
+        <span>Confirmar exclusão</span>
+    </mat-toolbar-row>
+</mat-toolbar>
+
+<div class="confirm-detail">
+
+    <mat-spinner *ngIf="loading" style="margin: 0 auto;"></mat-spinner>
+
+    <div *ngIf="!loading">
+        Deseja realmente excluir esta tarefa?
+
+        <div class="buttons">
+            <button mat-button
+                (click)="cancel()">
+                Cancelar
+            </button>
+            <button mat-raised-button
+                (click)="confirm()"
+                color="warn">
+                Confirmar 
+            </button>
+        </div>
+    </div>
+
+</div>

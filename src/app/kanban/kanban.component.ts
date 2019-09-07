@@ -84,6 +84,7 @@ export class KanbanComponent implements OnInit {
         this.statusList.forEach(s => {
           if(t['status_id'] == s['id']) {
             let card = new Card(
+              t['id'],
               t['status_id'],
               t['title'],
               t['description'])

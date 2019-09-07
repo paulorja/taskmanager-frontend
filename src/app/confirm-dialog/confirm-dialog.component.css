@@ -1,0 +1,15 @@
+.spacer {
+    width: 12px;
+}
+
+.buttons {
+    padding-top: 12px;
+}
+
+.buttons > button {
+    width: 48%;
+}
+
+.buttons > button:first-child {
+    margin-right: 4%;
+}

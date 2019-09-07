@@ -12,6 +12,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material'
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -21,6 +23,7 @@ import { CardComponent } from './card/card.component';
 import { CardDialogComponent } from './card-dialog/card-dialog.component';
 import { CardListComponent } from './card-list/card-list.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +32,8 @@ import { NavbarComponent } from './navbar/navbar.component';
     CardComponent,
     CardDialogComponent,
     CardListComponent,
-    NavbarComponent
+    NavbarComponent,
+    ConfirmDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -47,12 +51,16 @@ import { NavbarComponent } from './navbar/navbar.component';
     MatDatepickerModule,
     MatNativeDateModule,
     MatToolbarModule,
-    MatIconModule
+    MatIconModule,
+    MatProgressSpinnerModule
   ],
   providers: [
     MatDatepickerModule
   ],
-  entryComponents: [CardDialogComponent],
+  entryComponents: [
+    CardDialogComponent,
+    ConfirmDialogComponent
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

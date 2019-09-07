@@ -1,5 +1,6 @@
 export class Card {
     constructor(
+        public id?: number,
         public status_id?: string,
         public title?: string,
         public description?: string,
