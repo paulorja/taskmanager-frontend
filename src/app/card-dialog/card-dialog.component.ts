@@ -3,9 +3,10 @@ import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormGroup, FormBuilder, FormGroupName } from '@angular/forms'
-
 import { FormControl } from '@angular/forms'
 
+import { RelationshipDataService } from '../relationship-data.service'
+import { TasksService } from '../tasks.service'
 import { Card } from '../card';
 import { Member } from '../member';
 
@@ -20,30 +21,19 @@ export class CardDialogComponent {
   cardForm: FormGroup;
   editMode: boolean = false;
   newMode: boolean = false;
+  createdCard = null;
 
   memberCtrl = new FormControl();
   filteredMembers: Observable<Member[]>;
-  members: Member[] = [
-    {
-      name: 'Arkansas',
-      imgUrl: 'https://upload.wikimedia.org/wikipedia/commons/9/9d/Flag_of_Arkansas.svg'
-    },
-    {
-      name: 'California',
-      imgUrl: 'https://upload.wikimedia.org/wikipedia/commons/0/01/Flag_of_California.svg'
-    },
-    {
-      name: 'Florida',
-      imgUrl: 'https://upload.wikimedia.org/wikipedia/commons/f/f7/Flag_of_Florida.svg'
-    },
-    {
-      name: 'Texas',
-      imgUrl: 'https://upload.wikimedia.org/wikipedia/commons/f/f7/Flag_of_Texas.svg'
-    }
-  ];
+
+  statusList;
+  prioritiesList;
+  membersList;
 
 
   constructor(
+    public relationshipService: RelationshipDataService,
+    public tasksService: TasksService,
     public dialogRef: MatDialogRef<CardDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data,
     private fb: FormBuilder
@@ -53,33 +43,58 @@ export class CardDialogComponent {
     this.card = data["card"];
     this.createForm();
 
-    console.log(this.cardForm.value)
+    this.statusList = this.relationshipService.getStatusList();
+    this.membersList = this.relationshipService.getMembersList();
+    this.prioritiesList = this.relationshipService.getPrioritiesList();
 
     this.filteredMembers = this.memberCtrl.valueChanges
       .pipe(
         startWith(''),
-        map(member => member ? this._filterMembers(member) : this.members.slice())
+        map(member => member ? this._filterMembers(member) : this.membersList.slice())
       );
   }
 
   createForm() {
     this.cardForm = this.fb.group({
-      status: this.card.status,
+      status_id: this.card.status_id,
       title: this.card.title,
-      priority: this.card.priority
+      description: this.card.description,
+      priority_id: this.card.priority_id
     })
     this.memberCtrl.setValue(this.card.member)
   }
 
-  onSubmit(formData) {
-    console.log(this.cardForm.value)
-    console.log("formData: " + formData);
+  onSubmit() {
+    let memberId = this.validateMember()
+    if(memberId && this.cardForm.status === "VALID") {
+      let taskData = this.cardForm.value;
+      taskData["member_id"] = memberId;
+      this.tasksService.create(taskData).then(res => {
+        this.createdCard = res;
+        this.dialogRef.close()
+      }).catch(err => {
+        if(err['status'] == 422) {
+          console.error("ERRO 422")
+        }
+      });
+    }
   }
 
   private _filterMembers(value: string): Member[] {
     const filterValue = value.toLowerCase();
 
-    return this.members.filter(member => member.name.toLowerCase().indexOf(filterValue) === 0);
+    return this.membersList.filter(member => member.name.toLowerCase().indexOf(filterValue) === 0);
+  }
+
+  private validateMember() {
+    let memberId = null
+    this.membersList.forEach(member => {
+      if(this.memberCtrl.value && this.memberCtrl.value.trim() === member["name"]) {
+        memberId = member["id"];
+      }
+    });
+    memberId == null ? this.memberCtrl.setValue("") : false;
+    return memberId;
   }
 
 }

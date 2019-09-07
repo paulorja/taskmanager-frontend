@@ -4,15 +4,15 @@ import { HttpClient } from '@angular/common/http'
 @Injectable({
   providedIn: 'root'
 })
-export class StatusService {
+export class PrioritiesService {
 
-  private statusUrl = 'http://localhost:3000/status';
-  public statusList;
+  private prioritiesUrl = 'http://localhost:3000/priorities';
+  public prioritiesList;
 
   constructor(private http: HttpClient) { }
 
-  getStatus() {
-    return this.http.get(this.statusUrl)
+  getPriorities() {
+    return this.http.get(this.prioritiesUrl)
   }
 
 }

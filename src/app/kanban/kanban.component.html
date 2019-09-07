@@ -5,7 +5,7 @@
         *ngFor="let status of statusList"
         [title]="status.name"
         [listId]="status.name"
-        statusId="status.id"
+        [statusId]="status.id"
         [cards]="status.cards"
         [connectedTo]="getListConnections(status)"
         (evtDrop)="drop($event)"

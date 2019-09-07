@@ -21,7 +21,7 @@ export class CardComponent implements OnInit {
   }
 
   openDialog() {
-    this.dialog.open(CardDialogComponent, {
+    let dialogRef = this.dialog.open(CardDialogComponent, {
       width: '400px',
       panelClass: 'card-dialog',
       data: {

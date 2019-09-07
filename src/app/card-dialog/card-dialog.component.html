@@ -55,10 +55,11 @@
             aria-label="Responsável" 
             [matAutocomplete]="auto" 
             [formControl]="memberCtrl">
+        <mat-error>Selecione um responsável</mat-error>
         <mat-autocomplete #auto="matAutocomplete">
             <mat-option *ngFor="let member of filteredMembers | async" [value]="member.name">
-            <img class="member-option-img" aria-hidden [src]="member.imgUrl" height="25">
-            <span>{{member.name}}</span> 
+                <img class="member-option-img" aria-hidden [src]="member.imgUrl" height="25">
+                <span>{{member.name}}</span> 
             </mat-option>
         </mat-autocomplete>
     </mat-form-field>
@@ -66,10 +67,10 @@
     <div id="cardFormInputs">
         <mat-form-field>
             <mat-label>Status</mat-label>
-            <mat-select name="status" formControlName="status">
-                <mat-option value="1">To Do</mat-option>
-                <mat-option value="2">Doing</mat-option>
-                <mat-option value="3">Done</mat-option>
+            <mat-select name="status_id" formControlName="status_id">
+                <mat-option *ngFor="let status of statusList" value="{{status['id']}}">
+                    {{status["name"]}}
+                </mat-option>
             </mat-select>
         </mat-form-field>
 
@@ -81,17 +82,19 @@
 
         <mat-form-field>
             <mat-label>Prioridade</mat-label>
-            <mat-select name="priority" formControlName="priority">
-                <mat-option value="1">Baixa</mat-option>
-                <mat-option value="2">Média</mat-option>
-                <mat-option value="3">Alta</mat-option>
-                <mat-option value="4">Urgente</mat-option>
+            <mat-select name="priority_id" formControlName="priority_id">
+                <mat-option *ngFor="let priority of prioritiesList" value="{{priority['id']}}">
+                    {{priority["name"]}}
+                </mat-option>
             </mat-select>
         </mat-form-field>
     </div>
 
     <mat-form-field>
-        <textarea matInput placeholder="Descrição"></textarea>
+        <textarea matInput 
+        placeholder="Descrição"
+        name="description" 
+        formControlName="description"></textarea>
     </mat-form-field>
 
     <button mat-raised-button

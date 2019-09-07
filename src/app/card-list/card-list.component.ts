@@ -30,11 +30,11 @@ export class CardListComponent implements OnInit {
 
   openCardDialog() {
     let card = new Card()
-    card.status = this.statusId
-    card.priority = "1"
+    card.status_id = String(this.statusId)
+    card.priority_id = "1"
     // card.member = "Paulo"
 
-    this.dialog.open(CardDialogComponent, {
+    let dialogRef = this.dialog.open(CardDialogComponent, {
       width: '400px',
       panelClass: 'card-dialog',
       data: { 
@@ -43,6 +43,12 @@ export class CardListComponent implements OnInit {
         card: card
       }
     });
+    dialogRef.afterClosed()
+    .subscribe(() => {
+      let c = dialogRef.componentInstance.createdCard
+      let newCard = new Card(c["status_id"], c["title"], c["description"])
+      this.cards.push(newCard)
+    })
   }
 
 }
