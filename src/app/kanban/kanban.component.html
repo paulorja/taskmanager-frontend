@@ -1,4 +1,3 @@
-
 <!-- <mat-spinner *ngIf="dragDisabled" style="margin: 0 auto;"></mat-spinner> -->
 
 <div *ngIf="statusList" id="kanban">
@@ -14,36 +13,5 @@
         (evtDrop)="drop($event)"
         >
     </app-card-list>
-
-
-    <!-- <app-card-list
-        title="To Do"
-        listId="To Do"
-        statusId="1"
-        [cards]="todo"
-        [connectedTo]="['Doing', 'Done']"
-        (evtDrop)="drop($event)"
-        >
-    </app-card-list>
-
-    <app-card-list
-        title="Doing"
-        listId="Doing"
-        statusId="2"
-        [cards]="doing"
-        [connectedTo]="['To Do', 'Done']"
-        (evtDrop)="drop($event)"
-        >
-    </app-card-list>
-
-    <app-card-list
-        title="Done"
-        listId="Done"
-        statusId="3"
-        [cards]="done"
-        [connectedTo]="['To Do', 'Doing']"
-        (evtDrop)="drop($event)"
-        >
-    </app-card-list> -->
 
 </div>

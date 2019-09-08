@@ -35,6 +35,7 @@ export class KanbanComponent implements OnInit {
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+
       this.dragDisabled = true;
       const taskId = event.container.data[event.currentIndex]["id"]
       this.tasksService.move(taskId, event.currentIndex + 1).then(res => {
@@ -49,6 +50,18 @@ export class KanbanComponent implements OnInit {
                         event.container.data,
                         event.previousIndex,
                         event.currentIndex);
+
+      let statusId = this.getStatusId(event.container.id);
+      if(statusId) {
+        this.dragDisabled = true;
+        const taskId = event.container.data[event.currentIndex]["id"]
+        this.tasksService.transfer(taskId, event.currentIndex + 1, statusId).then(res => {
+          this.dragDisabled = false;
+        }).catch(err => {
+          console.error(err)
+          this.dragDisabled = false;
+        });
+      }
     }
   }
 
@@ -74,6 +87,16 @@ export class KanbanComponent implements OnInit {
     this.prioritiesService.getPriorities().subscribe(priorities => {
       this.relationshipService.setPrioritiesList(priorities);
     });
+  }
+
+  getStatusId(statusName) {
+    let found = false;
+    this.statusList.forEach(s => {
+      if(statusName === s["name"]) {
+        found = s["id"];
+      }
+    });
+    return found;
   }
 
   getStatusList() {

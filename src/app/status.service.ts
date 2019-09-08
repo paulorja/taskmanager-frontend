@@ -12,7 +12,7 @@ export class StatusService {
   constructor(private http: HttpClient) { }
 
   getStatus() {
-    return this.http.get(this.statusUrl)
+    return this.http.get<any[]>(this.statusUrl)
   }
 
 }

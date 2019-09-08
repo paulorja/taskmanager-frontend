@@ -18,7 +18,7 @@ export class TasksService {
   constructor(private http: HttpClient) { }
 
   getTasks() {
-    return this.http.get(this.tasksUrl)
+    return this.http.get<any[]>(this.tasksUrl)
   }
 
   create(taskData) {
@@ -42,6 +42,16 @@ export class TasksService {
       .post(
         this.tasksUrl + taskId + "/move", JSON.stringify({
           position: position
+        }), httpOptions)
+      .toPromise();
+  }
+
+  transfer(taskId, position, statusId) {
+    return this.http
+      .post(
+        this.tasksUrl + taskId + "/transfer", JSON.stringify({
+          position: position,
+          status_id: statusId
         }), httpOptions)
       .toPromise();
   }
