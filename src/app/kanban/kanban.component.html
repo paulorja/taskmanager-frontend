@@ -1,4 +1,6 @@
 
+<!-- <mat-spinner *ngIf="dragDisabled" style="margin: 0 auto;"></mat-spinner> -->
+
 <div *ngIf="statusList" id="kanban">
 
     <app-card-list
@@ -6,6 +8,7 @@
         [title]="status.name"
         [listId]="status.name"
         [statusId]="status.id"
+        [dragDisabled]="dragDisabled"
         [cards]="status.cards"
         [connectedTo]="getListConnections(status)"
         (evtDrop)="drop($event)"

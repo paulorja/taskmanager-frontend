@@ -15,6 +15,7 @@ export class CardListComponent implements OnInit {
   @Input() listId 
   @Input() statusId
   @Input() cards
+  @Input() dragDisabled = false
   @Input() connectedTo
 
   @Output() evtDrop = new EventEmitter()

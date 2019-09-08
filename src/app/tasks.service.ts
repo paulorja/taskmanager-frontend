@@ -37,4 +37,13 @@ export class TasksService {
       .toPromise();
   }
 
+  move(taskId, position) {
+    return this.http
+      .post(
+        this.tasksUrl + taskId + "/move", JSON.stringify({
+          position: position
+        }), httpOptions)
+      .toPromise();
+  }
+
 }

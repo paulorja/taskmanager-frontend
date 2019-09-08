@@ -16,6 +16,7 @@ import { RelationshipDataService } from '../relationship-data.service'
 export class KanbanComponent implements OnInit {
 
   statusList = null
+  dragDisabled = false
 
   constructor(
     private relationshipService: RelationshipDataService,
@@ -34,6 +35,15 @@ export class KanbanComponent implements OnInit {
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+      this.dragDisabled = true;
+      const taskId = event.container.data[event.currentIndex]["id"]
+      this.tasksService.move(taskId, event.currentIndex + 1).then(res => {
+        this.dragDisabled = false;
+      }).catch(err => {
+        console.error(err)
+        this.dragDisabled = false;
+      });
+
     } else {
       transferArrayItem(event.previousContainer.data,
                         event.container.data,
