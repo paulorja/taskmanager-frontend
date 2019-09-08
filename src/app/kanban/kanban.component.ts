@@ -57,6 +57,14 @@ export class KanbanComponent implements OnInit {
         const taskId = event.container.data[event.currentIndex]["id"]
         this.tasksService.transfer(taskId, event.currentIndex + 1, statusId).then(res => {
           this.dragDisabled = false;
+          this.statusList.forEach(s => {
+            s["cards"].forEach(c => {
+              if(c["id"] == res["id"]) {
+                console.log('oi')
+                c["status_id"] = res["status_id"]
+              }
+            });
+          });
         }).catch(err => {
           console.error(err)
           this.dragDisabled = false;
@@ -66,6 +74,14 @@ export class KanbanComponent implements OnInit {
   }
 
   private
+
+  changeCardList(card: Card) {
+    this.statusList.forEach(s => {
+      if(s["id"] == card.status_id) {
+        s["cards"].push(card)
+      }
+    });
+  }
 
   getListConnections(status) {
     let connections = []
@@ -120,7 +136,10 @@ export class KanbanComponent implements OnInit {
               t['id'],
               t['status_id'],
               t['title'],
-              t['description'])
+              t['description'],
+              t['member_id'],
+              t['date'],
+              t['priority_id'])
             s['cards'].push(card)
           }
         });

@@ -11,6 +11,7 @@
         [cards]="status.cards"
         [connectedTo]="getListConnections(status)"
         (evtDrop)="drop($event)"
+        (changeCardList)="changeCardList($event)"
         >
     </app-card-list>
 

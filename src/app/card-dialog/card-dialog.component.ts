@@ -20,6 +20,7 @@ export class CardDialogComponent {
 
   card: Card;
   deletedCard: Card;
+  updatedCard: Card;
   cardForm: FormGroup;
   editMode: boolean = false;
   newMode: boolean = false;
@@ -44,12 +45,12 @@ export class CardDialogComponent {
     this.editMode = data["editMode"];
     this.newMode = data["newMode"];
     this.card = data["card"];
-    this.createForm();
 
     this.statusList = this.relationshipService.getStatusList();
     this.membersList = this.relationshipService.getMembersList();
     this.prioritiesList = this.relationshipService.getPrioritiesList();
 
+    this.createForm();
     this.filteredMembers = this.memberCtrl.valueChanges
       .pipe(
         startWith(''),
@@ -59,12 +60,22 @@ export class CardDialogComponent {
 
   createForm() {
     this.cardForm = this.fb.group({
-      status_id: this.card.status_id,
+      status_id: String(this.card.status_id),
       title: this.card.title,
       description: this.card.description,
-      priority_id: this.card.priority_id
+      date: this.card.date,
+      priority_id: String(this.card.priority_id)
     })
-    this.memberCtrl.setValue(this.card.member)
+    this.setMemberValue()
+  }
+
+  setMemberValue() {
+    this.membersList.forEach(m => {
+      if(m['id'] === this.card.member_id) {
+        this.memberCtrl.setValue(m['name'])
+        return;
+      }
+    });
   }
 
   openConfirmDialog() {
@@ -86,12 +97,40 @@ export class CardDialogComponent {
   }
 
   onSubmit() {
+    if(this.newMode) {
+      let memberId = this.validateMember()
+      if(memberId && this.cardForm.status === "VALID") {
+        let taskData = this.cardForm.value;
+        taskData["member_id"] = memberId;
+        this.tasksService.create(taskData).then(res => {
+          this.createdCard = res;
+          this.dialogRef.close()
+        }).catch(err => {
+          if(err['status'] == 422) {
+            console.error("ERRO 422")
+          }
+        });
+      }
+    } else if(this.editMode) {
+      this.updateCard()
+    }
+  }
+
+  private updateCard() {
     let memberId = this.validateMember()
     if(memberId && this.cardForm.status === "VALID") {
       let taskData = this.cardForm.value;
       taskData["member_id"] = memberId;
-      this.tasksService.create(taskData).then(res => {
-        this.createdCard = res;
+      taskData["id"] = this.card.id;
+      this.tasksService.update(taskData["id"], taskData).then(res => {
+        this.updatedCard = new Card(
+          res["id"],
+          res["status_id"],
+          res["title"],
+          res["description"],
+          res['member_id'],
+          res['date'],
+          res['priority_id'])
         this.dialogRef.close()
       }).catch(err => {
         if(err['status'] == 422) {
@@ -103,7 +142,6 @@ export class CardDialogComponent {
 
   private _filterMembers(value: string): Member[] {
     const filterValue = value.toLowerCase();
-
     return this.membersList.filter(member => member.name.toLowerCase().indexOf(filterValue) === 0);
   }
 

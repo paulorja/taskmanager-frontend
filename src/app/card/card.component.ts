@@ -19,6 +19,9 @@ export class CardComponent implements OnInit {
   @Output()
   delete: EventEmitter<Card> = new EventEmitter();
 
+  @Output()
+  update: EventEmitter<Card> = new EventEmitter();
+
   constructor(public dialog: MatDialog) { }
 
   ngOnInit() {
@@ -40,6 +43,9 @@ export class CardComponent implements OnInit {
     .subscribe(() => {
       let deletedCard = dialogRef.componentInstance.deletedCard;
       this.delete.emit(deletedCard);
+
+      let updatedCard = dialogRef.componentInstance.updatedCard;
+      this.update.emit(updatedCard);
     });
   }
 

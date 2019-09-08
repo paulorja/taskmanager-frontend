@@ -12,6 +12,7 @@
         <app-card 
             class="card" 
             (delete)="deleteFeedback($event)"
+            (update)="updateFeedback($event)"
             *ngFor="let card of cards" 
             [card]="card"
             [cdkDragDisabled]="dragDisabled"

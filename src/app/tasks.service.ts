@@ -30,6 +30,13 @@ export class TasksService {
       .toPromise();
   }
 
+  update(taskId, taskData) {
+    return this.http
+      .put(
+        this.tasksUrl + taskId, JSON.stringify({task: taskData}), httpOptions)
+      .toPromise();
+  }
+
   delete(taskId) {
     return this.http
       .delete(

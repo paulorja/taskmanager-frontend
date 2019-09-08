@@ -20,6 +20,9 @@ export class CardListComponent implements OnInit {
 
   @Output() evtDrop = new EventEmitter()
 
+  @Output()
+  changeCardList: EventEmitter<Card> = new EventEmitter()
+
   constructor(public dialog: MatDialog) { }
 
   ngOnInit() {
@@ -34,11 +37,27 @@ export class CardListComponent implements OnInit {
     index > -1 ? this.cards.splice(index, 1) : false;
   }
 
+  updateFeedback(updatedCard: Card) {
+    if(updatedCard) {
+      this.cards.forEach(oldCard => {
+        if(oldCard.id === updatedCard.id) {
+          let index = this.cards.indexOf(oldCard)
+          if(oldCard.status_id == updatedCard.status_id) {
+            this.cards[index] = updatedCard;
+          } else {
+            index > -1 ? this.cards.splice(index, 1) : false;
+            this.changeCardList.emit(updatedCard);
+          }
+          return;
+        }
+      });
+    }
+  }
+
   openCardDialog() {
     let card = new Card()
-    card.status_id = String(this.statusId)
-    card.priority_id = "1"
-    // card.member = "Paulo"
+    card.status_id = this.statusId
+    card.priority_id = 1
 
     let dialogRef = this.dialog.open(CardDialogComponent, {
       width: '400px',
@@ -52,8 +71,22 @@ export class CardListComponent implements OnInit {
     dialogRef.afterClosed()
     .subscribe(() => {
       let c = dialogRef.componentInstance.createdCard
-      let newCard = new Card(c["id"], c["status_id"], c["title"], c["description"])
-      this.cards.push(newCard)
+      if(c != null) {
+        let newCard = new Card(
+          c["id"],
+          c["status_id"],
+          c["title"],
+          c["description"],
+          c['member_id'],
+          c['date'],
+          c['priority_id'])
+        this.cards.push(newCard)
+        if(card.status_id != newCard.status_id) {
+          this.changeCardList.emit(newCard);
+          let index = this.cards.indexOf(newCard)
+          index > -1 ? this.cards.splice(index, 1) : false;
+        }
+      }
     })
   }
 
