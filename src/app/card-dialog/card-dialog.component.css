@@ -7,12 +7,16 @@
     width: 100%;
 }
 
-#cardFormInputs > * {
-    width: 30%;
+#cardFormInputs > *:nth-child(1), #cardFormInputs > *:nth-child(3) {
+    width: 28%;
+}
+
+#cardFormInputs > *:nth-child(2) {
+    width: 36%;
 }
 
 #cardFormInputs > *:nth-child(2), #cardFormInputs > *:nth-child(3) {
-    margin-left: 5%;
+    margin-left: 4%;
 }
 
 .member-option-img {

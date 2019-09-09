@@ -72,7 +72,7 @@ export class CardDialogComponent {
       status_id: String(this.card.status_id),
       title: this.card.title,
       description: this.card.description,
-      date: this.card.date,
+      date: this.card.date + "T00:00:00",
       priority_id: String(this.card.priority_id)
     })
     this.setMemberValue()
@@ -121,21 +121,26 @@ export class CardDialogComponent {
 
   onSubmit() {
     if(this.newMode) {
-      let memberId = this.validateMember()
-      if(memberId && this.cardForm.status === "VALID") {
-        let taskData = this.cardForm.value;
-        taskData["member_id"] = memberId;
-        this.tasksService.create(taskData).then(res => {
-          this.createdCard = res;
-          this.dialogRef.close()
-        }).catch(err => {
-          if(err['status'] == 422) {
-            console.error("ERRO 422")
-          }
-        });
-      }
+      this.createCard();
     } else if(this.editMode) {
-      this.updateCard()
+      this.updateCard();
+    }
+  }
+
+  private createCard() {
+    let memberId = this.validateMember()
+    if(memberId && this.cardForm.status === "VALID") {
+      this.loading = true;
+      let taskData = this.cardForm.value;
+      taskData["member_id"] = memberId;
+      this.tasksService.create(taskData).then(res => {
+        this.createdCard = res;
+        this.dialogRef.close()
+      }).catch(err => {
+        if(err['status'] == 422) {
+          console.error("ERRO 422")
+        }
+      });
     }
   }
 

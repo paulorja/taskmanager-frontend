@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http'
 import { DragDropModule } from '@angular/cdk/drag-drop'
 import { MatDialogModule } from '@angular/material/dialog';
-import { MatInputModule } from '@angular/material/input';
+import { MatInputModule, MAT_DATE_LOCALE } from '@angular/material';
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { MatButtonModule } from '@angular/material/button';
@@ -60,7 +60,8 @@ import { LoadingSnackbarComponent } from './loading-snackbar/loading-snackbar.co
     MatProgressBarModule
   ],
   providers: [
-    MatDatepickerModule
+    MatDatepickerModule,
+    { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
   ],
   entryComponents: [
     LoadingSnackbarComponent,

@@ -16,13 +16,15 @@
 
     <p>
         <strong>Status: </strong>
-        {{status["name"]}}
+        {{ status["name"] }}
         <br>
-        <strong>Data: </strong>
-        {{card.date}}
+        <span *ngIf="card.date">
+            <strong>Data: </strong>
+            {{ card.date | date:'dd/MM/yyyy' }}
+        </span>
         <br>
         <strong>Prioridade: </strong>
-        {{priority["name"]}}
+        {{ priority["name"] }}
     </p>
 
     <p>{{card.description}}</p>

@@ -29,7 +29,7 @@ export class CardComponent implements OnInit {
 
   openDialog() {
     let dialogRef = this.dialog.open(CardDialogComponent, {
-      width: '400px',
+      width: '430px',
       panelClass: 'card-dialog',
       autoFocus: false,
       data: {
