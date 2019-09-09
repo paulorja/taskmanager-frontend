@@ -40,6 +40,8 @@ export class CardDialogComponent {
   prioritiesList: any[];
   membersList: any[];
 
+  loading: boolean = false;
+
   constructor(
     public dialog: MatDialog,
     public relationshipService: RelationshipDataService,
@@ -143,6 +145,7 @@ export class CardDialogComponent {
       let taskData = this.cardForm.value;
       taskData["member_id"] = memberId;
       taskData["id"] = this.card.id;
+      this.loading = true;
       this.tasksService.update(taskData["id"], taskData).then(res => {
         this.updatedCard = new Card(
           res["id"],
@@ -154,6 +157,7 @@ export class CardDialogComponent {
           res['priority_id'])
         this.dialogRef.close()
       }).catch(err => {
+        this.dialogRef.close()
         if(err['status'] == 422) {
           console.error("ERRO 422")
         }

@@ -90,15 +90,6 @@
 
     <div id="cardFormInputs">
         <mat-form-field>
-            <mat-label>Status</mat-label>
-            <mat-select name="status_id" formControlName="status_id">
-                <mat-option *ngFor="let status of statusList" value="{{status['id']}}">
-                    {{status["name"]}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-
-        <mat-form-field>
             <input matInput 
                 name="date" 
                 formControlName="date"
@@ -106,6 +97,15 @@
                 placeholder="Data">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Status</mat-label>
+            <mat-select name="status_id" formControlName="status_id">
+                <mat-option *ngFor="let status of statusList" value="{{status['id']}}">
+                    {{status["name"]}}
+                </mat-option>
+            </mat-select>
         </mat-form-field>
 
         <mat-form-field>
@@ -125,7 +125,10 @@
         formControlName="description"></textarea>
     </mat-form-field>
 
+    <mat-spinner *ngIf="loading" style="margin: 0 auto;"></mat-spinner>
+
     <button mat-raised-button
+        *ngIf="!loading"
         color="primary"
         (click)="onSubmit()"
         type="submit">
