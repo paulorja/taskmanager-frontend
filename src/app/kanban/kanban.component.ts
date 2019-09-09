@@ -91,6 +91,7 @@ export class KanbanComponent implements OnInit {
   }
 
   getStatusList() {
+    this._snackBar.openFromComponent(LoadingSnackbarComponent);
     this.statusService.getStatus().subscribe(status => {
       this.relationshipService.setStatusList(status);
       this.statusList = [];
@@ -104,6 +105,7 @@ export class KanbanComponent implements OnInit {
 
   getCards() {
     this.tasksService.getTasks().subscribe(tasks => {
+      this._snackBar.dismiss();
       tasks.forEach(t => {
         this.statusList.forEach(s => {
           if(t['status_id'] == s['id']) {
