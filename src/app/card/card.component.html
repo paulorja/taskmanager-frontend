@@ -1,0 +1,9 @@
+<img *ngIf="card.memberImgUrl" [src]="card.memberImgUrl">
+<span>
+    {{ card.title }}
+</span>
+<button mat-flat-button
+    color="primary"
+    (click)="openDialog()">
+    Detalhes
+</button>

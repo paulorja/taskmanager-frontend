@@ -1,0 +1,16 @@
+<div *ngIf="statusList" id="kanban">
+
+    <app-card-list
+        *ngFor="let status of statusList"
+        [title]="status.name"
+        [listId]="status.name"
+        [statusId]="status.id"
+        [dragDisabled]="dragDisabled"
+        [cards]="status.cards"
+        [connectedTo]="getListConnections(status)"
+        (dropCard)="drop($event)"
+        (changeCardList)="changeCardList($event)"
+        >
+    </app-card-list>
+
+</div>

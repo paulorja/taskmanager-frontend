@@ -1,0 +1,55 @@
+#card-form {
+    display: flex;
+    flex-direction: column;
+}
+
+#card-form > div {
+    width: 100%;
+}
+
+#cardFormInputs > * {
+    width: 30%;
+}
+
+#cardFormInputs > *:nth-child(2), #cardFormInputs > *:nth-child(3) {
+    margin-left: 5%;
+}
+
+.member-option-img {
+    vertical-align: middle;
+    margin-right: 8px;
+}
+
+[dir='rtl'] .member-option-img {
+    margin-right: 0;
+    margin-left: 8px;
+}
+
+.spacer {
+    width: 12px;
+}
+
+.detail-buttons > button {
+    width: 48%;
+}
+
+.detail-buttons > button:first-child {
+    margin-right: 4%;
+}
+
+.member-detail img {
+    border-radius: 100%;
+    height: 48px;
+    border: 2px solid #673ab7;
+}
+
+.member-detail span {
+    position: absolute;
+    line-height: 48px;
+    margin-left: 12px;
+}
+
+.no-description {
+    color: #888;
+    font-style: italic;
+}

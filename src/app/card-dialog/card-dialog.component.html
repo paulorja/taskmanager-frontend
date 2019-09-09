@@ -1,0 +1,138 @@
+<mat-toolbar *ngIf="!editMode" color="primary">
+    <mat-toolbar-row>
+        <mat-icon>description</mat-icon>
+        <span class="spacer"></span>
+        <span>Visualizar Tarefa</span>
+    </mat-toolbar-row>
+</mat-toolbar>
+
+<div class="card-detail" *ngIf="!editMode">
+    <h2 style="margin-top: 0px;">{{card.title}}</h2>
+    
+    <div class="member-detail">
+        <img [src]="member['imgUrl']">
+        <span>{{member["name"]}}</span>
+    </div>
+
+    <p>
+        <strong>Status: </strong>
+        {{status["name"]}}
+        <br>
+        <strong>Data: </strong>
+        {{card.date}}
+        <br>
+        <strong>Prioridade: </strong>
+        {{priority["name"]}}
+    </p>
+
+    <p>{{card.description}}</p>
+    <p 
+        class="no-description"
+        *ngIf="card.description == null || card.description.trim() == ''">
+        Nenhuma descrição
+    </p>
+
+
+    <div class="detail-buttons">
+        <button mat-raised-button
+            (click)="openConfirmDialog()"
+            color="warn">
+            Excluir
+        </button>
+        <button mat-raised-button
+            color="primary"
+            (click)="editMode = true">
+            Editar
+        </button>
+    </div>
+</div>
+
+
+<mat-toolbar *ngIf="editMode" color="primary">
+    <mat-toolbar-row>
+        <button mat-mini-fab
+            *ngIf="!newMode"
+            color="basic"
+            (click)="editMode = false">
+            <mat-icon>navigate_before</mat-icon>
+        </button>
+        <mat-icon *ngIf="newMode">library_add</mat-icon>
+        <span class="spacer"></span>
+        <span *ngIf="!newMode">Editar Tarefa</span>
+        <span *ngIf="newMode">Nova Tarefa</span>
+    </mat-toolbar-row>
+</mat-toolbar>
+
+<form [formGroup]="cardForm" *ngIf="editMode" id="card-form">
+
+    <mat-form-field>
+        <input matInput required
+            placeholder="Título" 
+            name="title" 
+            formControlName="title">
+        <mat-error>Título é obrigatório</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput required
+            placeholder="Responsável" 
+            aria-label="Responsável" 
+            [matAutocomplete]="auto" 
+            [formControl]="memberCtrl">
+        <mat-error>Selecione um responsável</mat-error>
+        <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let member of filteredMembers | async" [value]="member.name">
+                <img class="member-option-img" aria-hidden [src]="member.imgUrl" height="25">
+                <span>{{member.name}}</span> 
+            </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+
+    <div id="cardFormInputs">
+        <mat-form-field>
+            <input matInput 
+                name="date" 
+                formControlName="date"
+                [matDatepicker]="picker" 
+                placeholder="Data">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Status</mat-label>
+            <mat-select name="status_id" formControlName="status_id">
+                <mat-option *ngFor="let status of statusList" value="{{status['id']}}">
+                    {{status["name"]}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Prioridade</mat-label>
+            <mat-select name="priority_id" formControlName="priority_id">
+                <mat-option *ngFor="let priority of prioritiesList" value="{{priority['id']}}">
+                    {{priority["name"]}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+    <mat-form-field>
+        <textarea matInput 
+        placeholder="Descrição"
+        name="description" 
+        formControlName="description"></textarea>
+    </mat-form-field>
+
+    <mat-spinner *ngIf="loading" style="margin: 0 auto;"></mat-spinner>
+
+    <button mat-raised-button
+        *ngIf="!loading"
+        color="primary"
+        (click)="onSubmit()"
+        type="submit">
+        Salvar
+    </button>
+
+</form>

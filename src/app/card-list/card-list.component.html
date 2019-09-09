@@ -1,0 +1,32 @@
+<div class="cardlist-container">
+    <h2>{{ title }}</h2>
+
+    <div
+        cdkDropList
+        id="{{listId}}"
+        [cdkDropListData]="cards"
+        [cdkDropListConnectedTo]="connectedTo"
+        class="cardlist"
+        (cdkDropListDropped)="drop($event)">
+
+        <app-card 
+            class="card" 
+            (delete)="deleteFeedback($event)"
+            (update)="updateFeedback($event)"
+            *ngFor="let card of cards" 
+            [card]="card"
+            [cdkDragDisabled]="dragDisabled"
+            cdkDrag>
+        </app-card>
+
+    </div>
+
+    <div class="cardlist-bottom">
+        <button mat-button 
+            color="primary" 
+            (click)="openCardDialog()">
+            Adicionar tarefa
+        </button>
+    </div>
+</div>
+
