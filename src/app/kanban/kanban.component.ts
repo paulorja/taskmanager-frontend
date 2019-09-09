@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { Card } from '../card';
+import { RelationshipDataService } from '../relationship-data.service'
 import { TasksService } from '../tasks.service'
 import { StatusService } from '../status.service'
 import { PrioritiesService } from '../priorities.service'
 import { MembersService } from '../members.service'
-import { RelationshipDataService } from '../relationship-data.service'
+import { Card } from '../card';
+import { LoadingSnackbarComponent } from '../loading-snackbar/loading-snackbar.component';
 
 @Component({
   selector: 'app-kanban',
@@ -15,10 +17,11 @@ import { RelationshipDataService } from '../relationship-data.service'
 })
 export class KanbanComponent implements OnInit {
 
-  statusList = null
-  dragDisabled = false
+  statusList: any[] = null
+  dragDisabled: boolean = false
 
   constructor(
+    private _snackBar: MatSnackBar,
     private relationshipService: RelationshipDataService,
     private statusService: StatusService,
     private membersService: MembersService,
@@ -35,40 +38,13 @@ export class KanbanComponent implements OnInit {
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-
-      this.dragDisabled = true;
-      const taskId = event.container.data[event.currentIndex]["id"]
-      this.tasksService.move(taskId, event.currentIndex + 1).then(res => {
-        this.dragDisabled = false;
-      }).catch(err => {
-        console.error(err)
-        this.dragDisabled = false;
-      });
-
+      this.requestMoveCard(event);
     } else {
       transferArrayItem(event.previousContainer.data,
                         event.container.data,
                         event.previousIndex,
                         event.currentIndex);
-
-      let statusId = this.getStatusId(event.container.id);
-      if(statusId) {
-        this.dragDisabled = true;
-        const taskId = event.container.data[event.currentIndex]["id"]
-        this.tasksService.transfer(taskId, event.currentIndex + 1, statusId).then(res => {
-          this.dragDisabled = false;
-          this.statusList.forEach(s => {
-            s["cards"].forEach(c => {
-              if(c["id"] == res["id"]) {
-                c["status_id"] = res["status_id"]
-              }
-            });
-          });
-        }).catch(err => {
-          console.error(err)
-          this.dragDisabled = false;
-        });
-      }
+      this.requestTransferCard(event);
     }
   }
 
@@ -76,7 +52,7 @@ export class KanbanComponent implements OnInit {
 
   changeCardList(card: Card) {
     this.statusList.forEach(s => {
-      if(s["id"] == card.status_id) {
+      if(s["id"] === card.status_id) {
         s["cards"].push(card)
       }
     });
@@ -117,12 +93,12 @@ export class KanbanComponent implements OnInit {
   getStatusList() {
     this.statusService.getStatus().subscribe(status => {
       this.relationshipService.setStatusList(status);
-      this.statusList = []
+      this.statusList = [];
       status.forEach(s => {
-        s['cards'] = []
-        this.statusList.push(s)
+        s['cards'] = [];
+        this.statusList.push(s);
       });
-      this.getCards()
+      this.getCards();
     });
   }
 
@@ -144,6 +120,44 @@ export class KanbanComponent implements OnInit {
         });
       });
     });
+  }
+
+  requestMoveCard(event) {
+    this.dragDisabled = true;
+    let snackRef = this._snackBar.openFromComponent(LoadingSnackbarComponent);
+    const taskId = event.container.data[event.currentIndex]["id"];
+    this.tasksService.move(taskId, event.currentIndex + 1).then(res => {
+      this.dragDisabled = false;
+      snackRef.dismiss()
+    }).catch(err => {
+      console.error(err);
+      this.dragDisabled = false;
+      snackRef.dismiss()
+    });
+  }
+
+  requestTransferCard(event) {
+    let statusId = this.getStatusId(event.container.id);
+    if(statusId) {
+      this.dragDisabled = true;
+      let snackRef = this._snackBar.openFromComponent(LoadingSnackbarComponent);
+      const taskId = event.container.data[event.currentIndex]["id"];
+      this.tasksService.transfer(taskId, event.currentIndex + 1, statusId).then(res => {
+        this.dragDisabled = false;
+        snackRef.dismiss()
+        this.statusList.forEach(s => {
+          s["cards"].forEach(c => {
+            if(c["id"] == res["id"]) {
+              c["status_id"] = res["status_id"];
+            }
+          });
+        });
+      }).catch(err => {
+        console.error(err);
+        this.dragDisabled = false;
+        snackRef.dismiss()
+      });
+    }
   }
 
 }

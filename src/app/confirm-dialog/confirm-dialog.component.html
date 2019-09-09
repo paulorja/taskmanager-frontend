@@ -7,12 +7,10 @@
 </mat-toolbar>
 
 <div class="confirm-detail">
-
     <mat-spinner *ngIf="loading" style="margin: 0 auto;"></mat-spinner>
 
     <div *ngIf="!loading">
         Deseja realmente excluir esta tarefa?
-
         <div class="buttons">
             <button mat-button
                 (click)="cancel()">
@@ -25,5 +23,4 @@
             </button>
         </div>
     </div>
-
 </div>

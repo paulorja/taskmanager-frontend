@@ -33,7 +33,7 @@ export class ConfirmDialogComponent {
       this.deletedCard = this.card;
       this.dialogRef.close();
     }).catch(err => {
-      console.error(err)
+      console.error(err);
     });
   }
 

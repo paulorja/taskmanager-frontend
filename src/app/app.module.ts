@@ -13,7 +13,8 @@ import { MatNativeDateModule } from '@angular/material'
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -24,6 +25,7 @@ import { CardDialogComponent } from './card-dialog/card-dialog.component';
 import { CardListComponent } from './card-list/card-list.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import { LoadingSnackbarComponent } from './loading-snackbar/loading-snackbar.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,8 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
     CardDialogComponent,
     CardListComponent,
     NavbarComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    LoadingSnackbarComponent
   ],
   imports: [
     BrowserModule,
@@ -52,12 +55,15 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
     MatNativeDateModule,
     MatToolbarModule,
     MatIconModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatSnackBarModule,
+    MatProgressBarModule
   ],
   providers: [
     MatDatepickerModule
   ],
   entryComponents: [
+    LoadingSnackbarComponent,
     CardDialogComponent,
     ConfirmDialogComponent
   ],

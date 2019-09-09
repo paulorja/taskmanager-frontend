@@ -1,9 +1,8 @@
-import { Component, OnInit, Input, Inject, Output } from '@angular/core';
+import { Component, OnInit, Input, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog'
 import { CardDialogComponent } from '../card-dialog/card-dialog.component';
 
 import { Card } from '../card';
-import { OuterSubscriber } from 'rxjs/internal/OuterSubscriber';
 import { EventEmitter } from '@angular/core';
 
 @Component({
@@ -14,7 +13,7 @@ import { EventEmitter } from '@angular/core';
 export class CardComponent implements OnInit {
 
   @Input()
-  card: Card 
+  card: Card;
 
   @Output()
   delete: EventEmitter<Card> = new EventEmitter();

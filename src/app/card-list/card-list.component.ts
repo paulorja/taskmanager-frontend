@@ -11,18 +11,18 @@ import { Card } from '../card';
 })
 export class CardListComponent implements OnInit {
 
-  @Input() title
-  @Input() listId 
-  @Input() statusId
-  @Input() cards
-  @Input() dragDisabled = false
-  @Input() connectedTo
+  @Input() title;
+  @Input() listId;
+  @Input() statusId;
+  @Input() cards;
+  @Input() dragDisabled = false;
+  @Input() connectedTo;
 
   @Output() 
-  evtDrop = new EventEmitter()
+  dropCard = new EventEmitter();
 
   @Output()
-  changeCardList: EventEmitter<Card> = new EventEmitter()
+  changeCardList: EventEmitter<Card> = new EventEmitter();
 
   constructor(public dialog: MatDialog) { }
 
@@ -30,7 +30,7 @@ export class CardListComponent implements OnInit {
   }
 
   drop(event) {
-    this.evtDrop.emit(event)
+    this.dropCard.emit(event)
   }
 
   deleteFeedback(deletedCard: Card) {

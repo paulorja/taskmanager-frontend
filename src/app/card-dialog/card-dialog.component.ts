@@ -36,10 +36,9 @@ export class CardDialogComponent {
   memberCtrl = new FormControl();
   filteredMembers: Observable<Member[]>;
 
-  statusList;
-  prioritiesList;
-  membersList;
-
+  statusList: any[];
+  prioritiesList: any[];
+  membersList: any[];
 
   constructor(
     public dialog: MatDialog,
@@ -62,7 +61,7 @@ export class CardDialogComponent {
     this.filteredMembers = this.memberCtrl.valueChanges
       .pipe(
         startWith(''),
-        map(member => member ? this._filterMembers(member) : this.membersList.slice())
+        map(member => member ? this.filterMembers(member) : this.membersList.slice())
       );
   }
 
@@ -162,7 +161,7 @@ export class CardDialogComponent {
     }
   }
 
-  private _filterMembers(value: string): Member[] {
+  private filterMembers(value: string): Member[] {
     const filterValue = value.toLowerCase();
     return this.membersList.filter(member => member.name.toLowerCase().indexOf(filterValue) === 0);
   }
