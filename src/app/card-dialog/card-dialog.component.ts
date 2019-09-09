@@ -72,7 +72,7 @@ export class CardDialogComponent {
       status_id: String(this.card.status_id),
       title: this.card.title,
       description: this.card.description,
-      date: this.card.date + "T00:00:00",
+      date: this.card.date ? this.card.date + "T00:00:00" : null,
       priority_id: String(this.card.priority_id)
     })
     this.setMemberValue()
