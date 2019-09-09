@@ -13,7 +13,7 @@ const httpOptions = {
 })
 export class TasksService {
 
-  private tasksUrl = 'http://localhost:3000/tasks/'
+  private tasksUrl = 'https://still-atoll-35576.herokuapp.com/tasks/'
 
   constructor(private http: HttpClient) { }
 
