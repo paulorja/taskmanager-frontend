@@ -18,7 +18,8 @@ export class CardListComponent implements OnInit {
   @Input() dragDisabled = false
   @Input() connectedTo
 
-  @Output() evtDrop = new EventEmitter()
+  @Output() 
+  evtDrop = new EventEmitter()
 
   @Output()
   changeCardList: EventEmitter<Card> = new EventEmitter()

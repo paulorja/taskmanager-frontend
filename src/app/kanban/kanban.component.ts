@@ -60,7 +60,6 @@ export class KanbanComponent implements OnInit {
           this.statusList.forEach(s => {
             s["cards"].forEach(c => {
               if(c["id"] == res["id"]) {
-                console.log('oi')
                 c["status_id"] = res["status_id"]
               }
             });

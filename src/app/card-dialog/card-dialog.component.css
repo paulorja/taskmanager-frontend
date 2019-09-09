@@ -36,3 +36,20 @@
 .detail-buttons > button:first-child {
     margin-right: 4%;
 }
+
+.member-detail img {
+    border-radius: 100%;
+    height: 48px;
+    border: 2px solid #673ab7;
+}
+
+.member-detail span {
+    position: absolute;
+    line-height: 48px;
+    margin-left: 12px;
+}
+
+.no-description {
+    color: #888;
+    font-style: italic;
+}

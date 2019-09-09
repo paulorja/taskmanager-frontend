@@ -7,8 +7,31 @@
 </mat-toolbar>
 
 <div class="card-detail" *ngIf="!editMode">
-    <h2>{{card.title}}</h2>
+    <h2 style="margin-top: 0px;">{{card.title}}</h2>
+    
+    <div class="member-detail">
+        <img [src]="member['imgUrl']">
+        <span>{{member["name"]}}</span>
+    </div>
+
+    <p>
+        <strong>Status: </strong>
+        {{status["name"]}}
+        <br>
+        <strong>Data: </strong>
+        {{card.date}}
+        <br>
+        <strong>Prioridade: </strong>
+        {{priority["name"]}}
+    </p>
+
     <p>{{card.description}}</p>
+    <p 
+        class="no-description"
+        *ngIf="card.description == null || card.description.trim() == ''">
+        Nenhuma descrição
+    </p>
+
 
     <div class="detail-buttons">
         <button mat-raised-button

@@ -5,11 +5,13 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { FormControl } from '@angular/forms';
 
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { RelationshipDataService } from '../relationship-data.service';
 import { TasksService } from '../tasks.service';
 import { Card } from '../card';
 import { Member } from '../member';
-import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { Status } from '../status';
+import { Priority } from '../priority';
 
 @Component({
   selector: 'app-card-dialog',
@@ -21,10 +23,15 @@ export class CardDialogComponent {
   card: Card;
   deletedCard: Card;
   updatedCard: Card;
+  createdCard: Card;
+
+  member: Member;
+  status: Status;
+  priority: Priority;
+
   cardForm: FormGroup;
   editMode: boolean = false;
   newMode: boolean = false;
-  createdCard = null;
 
   memberCtrl = new FormControl();
   filteredMembers: Observable<Member[]>;
@@ -51,6 +58,7 @@ export class CardDialogComponent {
     this.prioritiesList = this.relationshipService.getPrioritiesList();
 
     this.createForm();
+    this.createView();
     this.filteredMembers = this.memberCtrl.valueChanges
       .pipe(
         startWith(''),
@@ -69,9 +77,23 @@ export class CardDialogComponent {
     this.setMemberValue()
   }
 
+  createView() {
+    this.prioritiesList.forEach(p => {
+      if(p["id"] === this.card.priority_id) {
+        this.priority = p;
+      }
+    });
+    this.statusList.forEach(s => {
+      if(s["id"] === this.card.status_id) {
+        this.status = s;
+      }
+    });
+  }
+
   setMemberValue() {
     this.membersList.forEach(m => {
       if(m['id'] === this.card.member_id) {
+        this.member = m;
         this.memberCtrl.setValue(m['name'])
         return;
       }
