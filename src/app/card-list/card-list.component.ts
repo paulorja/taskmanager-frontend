@@ -61,7 +61,7 @@ export class CardListComponent implements OnInit {
     card.priority_id = 1
 
     let dialogRef = this.dialog.open(CardDialogComponent, {
-      width: '400px',
+      width: '420px',
       panelClass: 'card-dialog',
       data: { 
         editMode: true,
