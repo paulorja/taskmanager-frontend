@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http'
 })
 export class PrioritiesService {
 
-  private prioritiesUrl = 'https://still-atoll-35576.herokuapp.com/priorities';
+  private prioritiesUrl = 'http://localhost:3000/priorities';
   public prioritiesList;
 
   constructor(private http: HttpClient) { }

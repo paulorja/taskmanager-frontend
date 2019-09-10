@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http'
 })
 export class MembersService {
 
-  private membersUrl = 'https://still-atoll-35576.herokuapp.com/members';
+  private membersUrl = 'http://localhost:3000/members';
   public membersList;
 
   constructor(private http: HttpClient) { }

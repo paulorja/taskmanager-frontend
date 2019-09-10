@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http'
 })
 export class StatusService {
 
-  private statusUrl = 'https://still-atoll-35576.herokuapp.com/status';
+  private statusUrl = 'http://localhost:3000/status';
   public statusList;
 
   constructor(private http: HttpClient) { }
